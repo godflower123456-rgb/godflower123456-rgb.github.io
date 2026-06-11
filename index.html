@@ -163,7 +163,7 @@
             </a>
         </div>
         <div class="flex items-center gap-md">
-            <button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-slate-200 transition-colors" title="隱私權政策" onclick="openPolicyModal()">
+            <button class="w-14 h-14 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-slate-200 transition-colors" title="隱私權政策" onclick="openPolicyModal()">
                 <span class="material-symbols-outlined" data-icon="info">info</span>
             </button>
         </div>
@@ -197,7 +197,7 @@
                         <span class="px-sm py-base rounded-full bg-slate-200 font-label-sm text-label-sm text-slate-500">本日對話</span>
                     </div>
                     <div class="flex items-start gap-sm z-10 max-w-[80%]">
-                        <div class="w-8 h-8 rounded-full flex-shrink-0 shadow-sm border border-slate-200 mt-[18px] overflow-hidden">
+                        <div class="w-14 h-14 rounded-full flex-shrink-0 shadow-sm border border-slate-200 mt-[18px] overflow-hidden">
                             <img class="bot-avatar w-full h-full object-cover" src="" alt="Bot">
                         </div>
                         <div class="flex flex-col gap-base">
@@ -212,7 +212,7 @@
                         <span class="px-sm py-base rounded-full bg-slate-200 font-label-sm text-label-sm text-slate-500">本日對話</span>
                     </div>
                     <div class="flex items-start gap-sm z-10 max-w-[80%]">
-                        <div class="w-8 h-8 rounded-full flex-shrink-0 shadow-sm border border-slate-200 mt-[18px] overflow-hidden">
+                        <div class="w-14 h-14 rounded-full flex-shrink-0 shadow-sm border border-slate-200 mt-[18px] overflow-hidden">
                             <img class="bot-avatar w-full h-full object-cover" src="" alt="Bot">
                         </div>
                         <div class="flex flex-col gap-base">
@@ -241,7 +241,7 @@
   <div class="bg-white w-11/12 max-w-xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh] transform transition-all">
     <div class="bg-gradient-to-r from-brand-green-dark to-secondary px-lg py-md text-white flex justify-between items-center shrink-0">
       <span class="font-title-lg text-title-lg">隱私權宣告及資訊安全政策</span>
-      <button class="w-8 h-8 rounded-full bg-white bg-opacity-20 flex items-center justify-center hover:bg-opacity-30 transition-colors" onclick="closePolicyModal()">✕</button>
+      <button class="w-14 h-14 rounded-full bg-white bg-opacity-20 flex items-center justify-center hover:bg-opacity-30 transition-colors" onclick="closePolicyModal()">✕</button>
     </div>
     <div class="p-lg overflow-y-auto font-body-md text-body-md text-slate-600 space-y-md leading-relaxed">
       <div>
@@ -442,8 +442,8 @@
     if (role === 'user') {
       wrapper.className = "flex items-start gap-sm z-10 max-w-[80%] self-end flex-row-reverse animate-fade-in";
       wrapper.innerHTML = `
-        <div class="w-8 h-8 rounded-full bg-primary flex-shrink-0 flex items-center justify-center text-on-primary shadow-sm mt-[18px]">
-          <span class="material-symbols-outlined text-[18px]" data-icon="person">person</span>
+        <div class="w-14 h-14 rounded-full bg-primary flex-shrink-0 flex items-center justify-center text-on-primary shadow-sm mt-[18px]">
+          <span class="material-symbols-outlined text-[30px]" data-icon="person">person</span>
         </div>
         <div class="flex flex-col gap-base items-end">
           <span class="font-label-sm text-label-sm text-slate-500 mr-1">您</span>
@@ -454,7 +454,7 @@
       const botName = containerId.startsWith('faq') ? '智慧客服' : '法規智庫';
       wrapper.className = "flex items-start gap-sm z-10 max-w-[80%] animate-fade-in";
       wrapper.innerHTML = `
-        <div class="w-8 h-8 rounded-full flex-shrink-0 shadow-sm border border-slate-200 mt-[18px] overflow-hidden">
+        <div class="w-14 h-14 rounded-full flex-shrink-0 shadow-sm border border-slate-200 mt-[18px] overflow-hidden">
           <img class="w-full h-full object-cover" src="${BOT_AVATAR_URL}" alt="Bot">
         </div>
         <div class="flex flex-col gap-base">
@@ -466,7 +466,7 @@
       const botName = containerId.startsWith('faq') ? '智慧客服' : '法規智庫';
       wrapper.className = "flex items-start gap-sm z-10 max-w-[80%]";
       wrapper.innerHTML = `
-        <div class="w-8 h-8 rounded-full flex-shrink-0 shadow-sm border border-slate-200 mt-[18px] overflow-hidden">
+        <div class="w-14 h-14 rounded-full flex-shrink-0 shadow-sm border border-slate-200 mt-[18px] overflow-hidden">
           <img class="w-full h-full object-cover" src="${BOT_AVATAR_URL}" alt="Bot">
         </div>
         <div class="flex flex-col gap-base">
