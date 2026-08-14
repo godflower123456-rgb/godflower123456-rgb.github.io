@@ -1,511 +1,491 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>金高電智慧客戶服務系統</title>
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-205014944-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-205014944-1');
-    </script>
-
-    <link href="https://fonts.googleapis.com" rel="preconnect"/>
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    
-    <style>
-        .material-symbols-outlined {
-            font-family: 'Material Symbols Outlined';
-            font-weight: normal;
-            font-style: normal;
-            font-size: 24px;
-            line-height: 1;
-            letter-spacing: normal;
-            text-transform: none;
-            display: inline-block;
-            white-space: nowrap;
-            word-wrap: normal;
-            direction: ltr;
-            -webkit-font-feature-settings: 'liga';
-            -webkit-font-smoothing: antialiased;
-        }
-        
-        /* Custom Scrollbar for Chat */
-        .chat-scroll::-webkit-scrollbar {
-            width: 6px;
-        }
-        .chat-scroll::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .chat-scroll::-webkit-scrollbar-thumb {
-            background-color: #cbd5e1;
-            border-radius: 20px;
-        }
-    </style>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "on-secondary-fixed-variant": "#264191",
-                     "secondary-fixed": "#dce1ff",
-                    "slate-200": "#e2e8f0",
-                    "inverse-primary": "#7edb89",
-                    "outline": "#6f7a6d",
-                    "error": "#ba1a1a",
-                     "slate-300": "#cbd5e1",
-                    "surface": "#f9f9ff",
-                    "surface-tint": "#006e2b",
-                    "background": "#f9f9ff",
-                    "secondary": "#4059aa",
-                     "surface-container-high": "#dee8ff",
-                    "outline-variant": "#becabb",
-                    "on-error-container": "#93000a",
-                    "on-tertiary": "#ffffff",
-                     "surface-bright": "#f9f9ff",
-                    "on-secondary-container": "#1d3989",
-                    "primary": "#006b2a",
-                    "brand-green-dark": "#247036",
-                    "surface-dim": "#cfdaf2",
-                     "on-primary-container": "#f7fff2",
-                    "primary-container": "#27853f",
-                    "surface-container-lowest": "#ffffff",
-                    "brand-gradient": "linear-gradient(135deg, #2d8a43 0%, #1e3a8a 100%)",
-                    "on-tertiary-fixed-variant": "#812340",
-                     "on-secondary": "#ffffff",
-                    "on-primary-fixed": "#002108",
-                    "inverse-on-surface": "#ecf1ff",
-                    "surface-variant": "#d8e3fb",
-                    "slate-50": "#f8fafc",
-                    "tertiary-fixed": "#ffd9df",
-                    "tertiary": "#9d3955",
-                    "on-surface-variant": "#3f493e",
-                    "on-tertiary-fixed": "#3f0017",
-                     "on-primary-fixed-variant": "#00531e",
-                    "error-container": "#ffdad6",
-                    "surface-container-highest": "#d8e3fb",
-                    "inverse-surface": "#263143",
-                    "slate-700": "#334155",
-                     "surface-container-low": "#f0f3ff",
-                    "tertiary-container": "#bc516d",
-                    "surface-container": "#e7eeff",
-                    "on-error": "#ffffff",
-                    "primary-fixed": "#9af7a3",
-                     "on-background": "#111c2d",
-                    "slate-500": "#64748b",
-                    "secondary-fixed-dim": "#b6c4ff",
-                    "on-surface": "#111c2d",
-                    "on-primary": "#ffffff",
-                     "secondary-container": "#8fa7fe",
-                    "primary-fixed-dim": "#7edb89",
-                    "tertiary-fixed-dim": "#ffb1c1",
-                    "on-secondary-fixed": "#00164e",
-                     "on-tertiary-container": "#fffbff"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                     "full": "9999px"
-            },
-            "spacing": {
-                    "margin-desktop": "40px",
-                    "gutter": "20px",
-                    "lg": "24px",
-                    "margin-mobile": "16px",
-                    "sm": "12px",
-                    "xl": "32px",
-                    "base": "4px",
-                     "xs": "8px",
-                    "md": "16px"
-            },
-            "fontFamily": {
-                    "headline-lg-mobile": ["Hanken Grotesk"],
-                    "label-sm": ["Hanken Grotesk"],
-                     "label-md": ["Hanken Grotesk"],
-                    "title-lg": ["Hanken Grotesk"],
-                    "headline-lg": ["Hanken Grotesk"],
-                    "body-md": ["Hanken Grotesk"],
-                     "headline-md": ["Hanken Grotesk"],
-                    "body-lg": ["Hanken Grotesk"],
-                    "display-lg": ["Hanken Grotesk"]
-            },
-            "fontSize": {
-                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "700"}],
-                    "label-sm": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
-                    "label-md": ["13px", {"lineHeight": "1.4", "fontWeight": "500"}],
-                    "title-lg": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}],
-                    "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
-                    "body-md": ["14px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                    "headline-md": ["20px", {"lineHeight": "1.3", "fontWeight": "700"}],
-                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                    "display-lg": ["48px", {"lineHeight": "1.1", "fontWeight": "700"}]
-            }
-          }
-        }
-      }
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Espresso 沖煮記錄器</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome 圖示 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* iOS 風格選單與體驗優化 */
+    body { -webkit-tap-highlight-color: transparent; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+  </style>
 </head>
-<body class="bg-surface text-on-surface font-body-md h-screen w-screen overflow-hidden flex antialiased">
+<body class="bg-gray-100 text-gray-800 pb-20 font-sans">
 
-<main class="flex-1 flex flex-col h-full relative overflow-hidden bg-surface-container-low w-full">
-    <header class="flex justify-between items-center px-margin-desktop py-md w-full bg-surface-container-lowest border-b border-slate-200 shadow-sm z-30 shrink-0">
-        <div class="flex items-center gap-md">
-            <a href="https://www.gigataiwan.com.tw/" target="_top" class="flex items-center transition-opacity hover:opacity-80">
-              <img alt="Golden Power Logo" class="h-[40px] object-contain" src="https://www.gigataiwan.com.tw/images/logo.png"/>
-            </a>
-        </div>
-        <div class="flex items-center gap-md">
-            <button class="w-14 h-14 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-slate-200 transition-colors" title="隱私權政策" onclick="openPolicyModal()">
-                <span class="material-symbols-outlined" data-icon="info">info</span>
-             </button>
-        </div>
-    </header>
+  <!-- Header -->
+  <header class="bg-amber-900 text-white p-4 text-center text-lg font-bold shadow-md sticky top-0 z-50 flex justify-between items-center">
+    <span><i class="fa-solid font-mug-hot mr-2"></i>Espresso Tracker</span>
+    <button onclick="fetchData()" class="text-xs bg-amber-800 hover:bg-amber-700 px-3 py-1 rounded-full border border-amber-600">
+      <i class="fa-solid fa-rotate mr-1"></i>同步
+    </button>
+  </header>
 
-    <div class="flex-1 overflow-hidden flex justify-center items-center">
-        <div class="w-full max-w-5xl h-full flex flex-col bg-surface-container-lowest overflow-hidden shadow-lg">
-            
-            <div class="p-md border-b border-slate-200 flex flex-col sm:flex-row justify-between items-center shrink-0">
-                <div>
-                     <h1 class="font-title-lg text-title-lg text-on-surface">金高電 智慧客服系統</h1>
-                    <p class="font-body-md text-body-md text-slate-500" id="engine-desc">產品諮詢與公司資訊</p>
-                </div>
-                <div class="flex bg-slate-200 p-base rounded-lg mt-sm sm:mt-0">
-                    <button id="btn-faq" onclick="switchEngine('faq')" class="px-md py-xs rounded-md font-label-md text-label-md flex items-center gap-xs transition-all">
-                        <span class="btn-icon">💡</span>
-                        智慧客服
-                    </button>
-                    <button id="btn-dify" onclick="switchEngine('dify')" class="px-md py-xs rounded-md font-label-md text-label-md flex items-center gap-xs transition-all">
-                        <span class="btn-icon">📚</span>
-                        法規智庫
-                    </button>
-                </div>
-             </div>
+  <main class="max-w-md mx-auto p-4">
 
-            <div class="flex-1 overflow-hidden p-lg flex flex-col gap-lg relative bg-surface-container-low w-full">
-                <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: radial-gradient(circle at 50% 50%, #2d8a43 0%, transparent 60%);"></div>
-                
-                <div id="faq-messages" class="flex-1 overflow-y-auto chat-scroll flex flex-col gap-lg pr-1">
-                     <div class="flex justify-center z-10">
-                        <span class="px-sm py-base rounded-full bg-slate-200 font-label-sm text-label-sm text-slate-500">本日對話</span>
-                    </div>
-                    <div class="flex items-start gap-sm z-10 max-w-[80%]">
-                         <div class="w-14 h-14 rounded-full flex-shrink-0 shadow-sm border border-slate-200 mt-[18px] overflow-hidden">
-                            <img class="bot-avatar w-full h-full object-cover" src="" alt="Bot">
-                        </div>
-                         <div class="flex flex-col gap-base">
-                            <span class="font-label-sm text-label-sm text-slate-500 ml-1">智慧客服</span>
-                            <div class="bg-surface-container-lowest border border-slate-200 rounded-r-xl rounded-bl-xl p-md shadow-[0_2px_5px_rgba(0,0,0,0.02)] shadow-sm font-body-md text-body-md text-slate-800 whitespace-pre-wrap break-all">您好，我是智慧客服小金，很高興為您服務！<br/>有關公司跟產品的問題都可以向我提問！</div>
-                         </div>
-                    </div>
-                </div>
-
-                <div id="dify-messages" class="flex-1 overflow-y-auto chat-scroll flex flex-col gap-lg pr-1 hidden">
-                    <div class="flex justify-center z-10">
-                         <span class="px-sm py-base rounded-full bg-slate-200 font-label-sm text-label-sm text-slate-500">本日對話</span>
-                    </div>
-                    <div class="flex items-start gap-sm z-10 max-w-[80%]">
-                        <div class="w-14 h-14 rounded-full flex-shrink-0 shadow-sm border border-slate-200 mt-[18px] overflow-hidden">
-                            <img class="bot-avatar w-full h-full object-cover" src="" alt="Bot">
-                        </div>
-                        <div class="flex flex-col gap-base">
-                             <span class="font-label-sm text-label-sm text-slate-500 ml-1">法規智庫</span>
-                            <div class="bg-surface-container-lowest border border-slate-200 rounded-r-xl rounded-bl-xl p-md shadow-[0_2px_5px_rgba(0,0,0,0.02)] shadow-sm font-body-md text-body-md text-slate-800 whitespace-pre-wrap break-all">您好，我是智慧客服小金，很高興為您服務！<br/>請輸入有關「建築物給水排水設備設計技術規範」的問題：</div>
-                        </div>
-                     </div>
-                </div>
-
-            </div>
-
-            <div class="p-md bg-surface-container-lowest border-t border-slate-200 shrink-0">
-                <div class="flex items-center gap-sm relative">
-                    <div class="flex-1 relative">
-                         <textarea id="chat-textarea" onkeydown="handleKeyPress(event)" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-sm px-md font-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary focus:bg-white resize-none transition-all block" placeholder="請輸入您的問題..." rows="1" style="min-height: 44px; max-height: 120px;"></textarea>
-                    </div>
-                    <button onclick="triggerSend()" class="bg-primary text-white px-md py-xs rounded-lg font-label-md hover:bg-brand-green-dark transition-colors shadow-sm h-[44px] flex items-center justify-center shrink-0">發送</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</main>
-
-<div class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center hidden" id="policy-modal" onclick="if(event.target===this) closePolicyModal()">
-  <div class="bg-white w-11/12 max-w-xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh] transform transition-all">
-    <div class="bg-gradient-to-r from-brand-green-dark to-secondary px-lg py-md text-white flex justify-between items-center shrink-0">
-      <span class="font-title-lg text-title-lg">隱私權宣告及資訊安全政策</span>
-      <button class="w-14 h-14 rounded-full bg-white bg-opacity-20 flex items-center justify-center hover:bg-opacity-30 transition-colors" onclick="closePolicyModal()">✕</button>
-    </div>
-    <div class="p-lg overflow-y-auto font-body-md text-body-md text-slate-600 space-y-md leading-relaxed">
-      <div>
-        <h3 class="font-headline-md text-headline-md text-primary mb-xs">1. 政策適用與資料概括蒐集</h3>
-        <p>本政策旨在說明金高電實業有限公司（下稱「本公司」）智慧客戶服務系統（下稱「本系統」）於提供服務時之資料處理原則。為維護系統運作、統計流量及提供對話連續性，本系統將於必要範圍內，自動蒐集不具備個人可識別性之匿名數據與對話紀錄。當您開始使用本系統之各項服務時，即視為您已充分閱讀並同意本政策之全部內容。</p>
+    <!-- ==================== 頁籤 1: 歷史紀錄 ==================== -->
+    <section id="tab-history" class="tab-content active space-y-4">
+      <div class="flex gap-2">
+        <input type="text" id="search-history" oninput="renderHistory()" placeholder="搜尋豆子、機器、評價..." class="flex-1 p-2 border border-gray-300 rounded-lg text-sm bg-white shadow-sm">
+        <select id="sort-history" onchange="renderHistory()" class="p-2 border border-gray-300 rounded-lg text-sm bg-white shadow-sm">
+          <option value="newest">最新優先</option>
+          <option value="oldest">最舊優先</option>
+          <option value="rating">分數最高</option>
+        </select>
       </div>
-      <div>
-        <h3 class="font-headline-md text-headline-md text-primary mb-xs">2. 第三方技術與 AI 運算宣告</h3>
-        <p>本系統部分功能採用第三方人工智慧（AI）技術進行語意分析與回覆生成，您輸入之對話文字將傳輸至第三方平台進行運算處理。特此聲明，相關傳輸過程均採取去識別化技術處理，該第三方平台並無法據此識別、追蹤 or 還原您的真實個人身分。</p>
+
+      <div id="history-list" class="space-y-3">
+        <div class="text-center text-gray-400 py-10"><i class="fa-solid fa-spinner fa-spin text-2xl mb-2"></i><br>載入資料中...</div>
       </div>
-      <div>
-        <h3 class="font-headline-md text-headline-md text-primary mb-xs">3. 資訊安全與責任限制</h3>
-        <p>本系統採用標準傳輸安全加密技術維護資訊安全。惟本平台屬開放式 AI 諮詢系統，用戶請勿主動輸入 or 提供任何敏感個人資料（包括但不限於：身分證字號、銀行帳號、個人密碼或詳細私密行蹤）。若因用戶主動揭露上述隱私資訊而導致任何風險或損害，應由用戶自行承擔，本公司概不負擔任何法律與損害賠償責任。</p>
+    </section>
+
+    <!-- ==================== 頁籤 2: 開始沖煮 ==================== -->
+    <section id="tab-brew" class="tab-content">
+      
+      <!-- 步驟進度條 -->
+      <div class="flex items-center justify-between mb-6 px-4">
+        <div id="step-dot-1" class="w-8 h-8 rounded-full bg-amber-800 text-white flex items-center justify-center font-bold text-sm">1</div>
+        <div class="h-1 flex-1 bg-gray-300 mx-2"></div>
+        <div id="step-dot-2" class="w-8 h-8 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center font-bold text-sm">2</div>
+        <div class="h-1 flex-1 bg-gray-300 mx-2"></div>
+        <div id="step-dot-3" class="w-8 h-8 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center font-bold text-sm">3</div>
       </div>
-      <div>
-        <h3 class="font-headline-md text-headline-md text-primary mb-xs">4. AI 生成內容之免責宣告</h3>
-        <p>本系統 AI 所生成之所有回覆（包含但不限於法規解讀、諮詢建議、文案生成等），均僅供參考，不具備法律實質效力，亦不代表本公司之正式承諾 or 立場。 正式業務執行與法規適用，仍應以政府官方公告之法規本文及本公司實際公告為準。若用戶因信賴本系統之 AI 回覆而導致任何直接或間接之損失，本公司特此聲明免除一切法律責任。</p>
-      </div>
-    </div>
-  </div>
-</div>
 
-<script>
-  const BOT_AVATAR_URL = 'https://www.gigataiwan.com.tw/download/0/3131/';
-  const GAS_BACKEND_URL = 'https://script.google.com/macros/s/AKfycby5vCQ2t39motbaxQafVc8xbSjnuYp5ImBoLlMZRqheaRAjM2IU07a3zBuJXUt3fVsrQQ/exec';
-  let currentEngine = 'faq';
-
-  function escapeHtml(string) {
-    return String(string).replace(/[&<>"']/g, function (s) {
-      return {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;'
-      }[s];
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-      const botAvatars = document.querySelectorAll('.bot-avatar');
-      botAvatars.forEach(img => {
-          img.src = BOT_AVATAR_URL;
-      });
-
-      const textarea = document.getElementById('chat-textarea');
-      if(textarea) {
-          textarea.addEventListener('input', function() {
-              this.style.height = 'auto';
-              this.style.height = (this.scrollHeight) + 'px';
-              if (this.value === '') {
-                  this.style.height = '44px';
-              }
-          });
-      }
-      switchEngine('faq');
-  });
-
-  function switchEngine(type) {
-    currentEngine = type;
-    const btnFaq = document.getElementById('btn-faq');
-    const btnDify = document.getElementById('btn-dify');
-    const faqMsgs = document.getElementById('faq-messages');
-    const difyMsgs = document.getElementById('dify-messages');
-    const desc = document.getElementById('engine-desc');
-    const activeClasses = ['bg-white', 'shadow-sm', 'text-primary', 'border', 'border-slate-300'];
-    const inactiveClasses = ['text-slate-500', 'hover:text-on-surface', 'transition-colors'];
-
-    if (type === 'faq') {
-      activeClasses.forEach(c => btnFaq.classList.add(c));
-      inactiveClasses.forEach(c => btnFaq.classList.remove(c));
-      inactiveClasses.forEach(c => btnDify.classList.add(c));
-      activeClasses.forEach(c => btnDify.classList.remove(c));
-      
-      faqMsgs.classList.remove('hidden');
-      difyMsgs.classList.add('hidden');
-      desc.textContent = '產品諮詢與公司資訊';
-    } else {
-      activeClasses.forEach(c => btnDify.classList.add(c));
-      inactiveClasses.forEach(c => btnDify.classList.remove(c));
-      inactiveClasses.forEach(c => btnFaq.classList.add(c));
-      activeClasses.forEach(c => btnFaq.classList.remove(c));
-      
-      difyMsgs.classList.remove('hidden');
-      faqMsgs.classList.add('hidden');
-      desc.textContent = '建築物給水排水設備設計技術規範查詢';
-    }
-  }
-
-  function openPolicyModal() {
-    document.getElementById('policy-modal').classList.remove('hidden');
-  }
-
-  function closePolicyModal() {
-    document.getElementById('policy-modal').classList.add('hidden');
-  }
-
-  function handleKeyPress(e) { 
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      triggerSend();
-    }
-  }
-
-  function triggerSend() {
-    sendMessage(currentEngine);
-  }
-
-  async function sendMessage(type, textFromBtn) {
-    const inputEl = document.getElementById('chat-textarea');
-    const text = textFromBtn || inputEl.value.trim();
-    if (!text) return;
-
-    const msgContainerId = type + '-messages';
-    appendMessage(msgContainerId, text, 'user');
-    
-    if (!textFromBtn) {
-      inputEl.value = '';
-      inputEl.style.height = '44px';
-    }
-
-    const typingId = appendMessage(msgContainerId, '', 'typing');
-    let currentUserId = localStorage.getItem('dify_user_id');
-    if (!currentUserId) {
-      currentUserId = 'user-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
-      localStorage.setItem('dify_user_id', currentUserId);
-    }
-
-    try {
-      const response = await fetch(GAS_BACKEND_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ type: type, message: text, userId: currentUserId, isButton: !!textFromBtn }),
-        redirect: 'follow'
-      });
-      const data = await response.json();
-      
-      const indicatorEl = document.getElementById(typingId);
-      if (indicatorEl) indicatorEl.remove();
-      appendMessage(msgContainerId, data.reply, 'bot');
-
-      if (data.imageUrl) {
-        const imgHTML = `<img src="${data.imageUrl}" style="max-width:100%; border-radius:12px; display:block; margin-top:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">`;
-        appendMessage(msgContainerId, imgHTML, 'bot');
-      }
-      
-      if (data.recommendations && data.recommendations.length > 0) {
-        const msgContainer = document.getElementById(msgContainerId);
-        const recArea = document.createElement('div');
-        recArea.className = 'recommendation-area flex flex-col items-start mt-xs gap-xs z-10';
+      <!-- 步驟 1: 準備參數 -->
+      <div id="brew-step-1" class="space-y-4 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+        <h2 class="font-bold text-gray-700 border-b pb-2">步驟 1：準備參數</h2>
         
-        const tip = document.createElement('span');
-        tip.textContent = "💡 猜您想問：";
-        tip.className = "font-label-sm text-label-sm text-slate-500 pl-1";
-        recArea.appendChild(tip);
-
-        const chipContainer = document.createElement('div');
-        chipContainer.className = "flex flex-wrap gap-xs";
-        data.recommendations.forEach(q => {
-          const btn = document.createElement('button');
-          btn.className = 'px-sm py-xs rounded-full border border-slate-300 bg-slate-50 hover:bg-slate-100 hover:border-primary transition-colors font-label-sm text-label-sm text-slate-600 text-left';
-          btn.textContent = q;
-          btn.onclick = () => sendMessage(type, q);
-          chipContainer.appendChild(btn);
-        });
-        recArea.appendChild(chipContainer);
-        recArea.scrollIntoView({ behavior: 'smooth' });
-        msgContainer.appendChild(recArea);
-        msgContainer.scrollTop = msgContainer.scrollHeight;
-      }
-
-      // 🌟【補齊】全螢幕版滿意度按鈕渲染
-      if (data.showFeedback && data.logRow) {
-        const msgContainer = document.getElementById(msgContainerId);
-        const feedbackDiv = document.createElement('div');
-        const feedbackId = 'feedback-' + data.logRow;
-        feedbackDiv.id = feedbackId;
-        feedbackDiv.className = 'feedback-area flex items-center gap-xs mt-xs text-label-md text-slate-500 pl-1 z-10';
-        feedbackDiv.innerHTML = `
-          <span>您是否滿意本次回答：</span>
-          <button class="px-sm py-1 rounded-full border border-primary text-primary bg-white hover:bg-primary hover:text-white transition-colors font-label-sm text-label-sm" onclick="sendFeedback('${type}', ${data.logRow}, '滿意', '${feedbackId}')">滿意</button>
-          <button class="px-sm py-1 rounded-full border border-slate-300 text-slate-500 bg-white hover:bg-slate-500 hover:text-white transition-colors font-label-sm text-label-sm" onclick="sendFeedback('${type}', ${data.logRow}, '不滿意', '${feedbackId}')">不滿意</button>
-        `;
-        msgContainer.appendChild(feedbackDiv);
-        msgContainer.scrollTop = msgContainer.scrollHeight;
-      }
-    } catch (error) {
-      console.error(error);
-      const indicatorEl = document.getElementById(typingId);
-      if (indicatorEl) indicatorEl.remove();
-      appendMessage(msgContainerId, '系統暫時忙碌中，請稍後再試。', 'bot');
-    }
-  }
-
-  // 🌟【補齊】全螢幕版發送滿意度回饋到後端 GAS
-  async function sendFeedback(type, logRow, feedbackValue, feedbackId) {
-    const container = document.getElementById(feedbackId);
-    if (!container) return;
-
-    container.innerHTML = `<span class="text-slate-400 italic font-label-md">💡 感謝您的回饋！(已選擇：${feedbackValue})</span>`;
-    try {
-      await fetch(GAS_BACKEND_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ type: 'feedback', logRow: logRow, feedback: feedbackValue }),
-        redirect: 'follow'
-      });
-    } catch (error) {
-      console.error("提交滿意度回饋失敗:", error);
-    }
-  }
-
-  function appendMessage(containerId, content, role) {
-    const msgContainer = document.getElementById(containerId);
-    const wrapper = document.createElement('div');
-    const id = 'msg-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
-    wrapper.id = id;
-    const cleanedContent = content ? content.trim() : '';
-
-    if (role === 'user') {
-      wrapper.className = "flex items-start gap-sm z-10 max-w-[80%] self-end flex-row-reverse animate-fade-in";
-      wrapper.innerHTML = `
-        <div class="w-14 h-14 rounded-full bg-primary flex-shrink-0 flex items-center justify-center text-on-primary shadow-sm mt-[18px]">
-          <span class="material-symbols-outlined text-[30px]" data-icon="person">person</span>
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">日期時間</label>
+          <input type="datetime-local" id="brew-datetime" class="w-full p-2 border rounded-lg text-sm">
         </div>
-        <div class="flex flex-col gap-base items-end">
-          <span class="font-label-sm text-label-sm text-slate-500 mr-1">您</span>
-          <div class="bg-primary text-on-primary rounded-l-xl rounded-br-xl p-md shadow-sm font-body-md text-body-md whitespace-pre-wrap break-all">${escapeHtml(cleanedContent)}</div>
+
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">豆子</label>
+          <input type="text" id="brew-bean" placeholder="例如：衣索比亞 耶加雪菲" class="w-full p-2 border rounded-lg text-sm">
         </div>
-      `;
-    } else if (role === 'bot') {
-      const botName = containerId.startsWith('faq') ? '智慧客服' : '法規智庫';
-      wrapper.className = "flex items-start gap-sm z-10 max-w-[80%] animate-fade-in";
-      wrapper.innerHTML = `
-        <div class="w-14 h-14 rounded-full flex-shrink-0 shadow-sm border border-slate-200 mt-[18px] overflow-hidden">
-          <img class="w-full h-full object-cover" src="${BOT_AVATAR_URL}" alt="Bot">
-        </div>
-        <div class="flex flex-col gap-base">
-          <span class="font-label-sm text-label-sm text-slate-500 ml-1">${botName}</span>
-          <div class="bg-surface-container-lowest border border-slate-200 rounded-r-xl rounded-bl-xl p-md shadow-[0_2px_5px_rgba(0,0,0,0.02)] shadow-sm font-body-md text-body-md text-slate-800 whitespace-pre-wrap break-all">${cleanedContent}</div>
-        </div>
-      `;
-    } else if (role === 'typing') {
-      const botName = containerId.startsWith('faq') ? '智慧客服' : '法規智庫';
-      wrapper.className = "flex items-start gap-sm z-10 max-w-[80%]";
-      wrapper.innerHTML = `
-        <div class="w-14 h-14 rounded-full flex-shrink-0 shadow-sm border border-slate-200 mt-[18px] overflow-hidden">
-          <img class="w-full h-full object-cover" src="${BOT_AVATAR_URL}" alt="Bot">
-        </div>
-        <div class="flex flex-col gap-base">
-          <span class="font-label-sm text-label-sm text-slate-500 ml-1">${botName}</span>
-          <div class="bg-surface-container-lowest border border-slate-200 rounded-r-xl rounded-bl-xl p-sm shadow-[0_2px_5px_rgba(0,0,0,0.02)] flex items-center gap-1 w-16 justify-center shadow-sm">
-            <div class="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></div>
-            <div class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
-            <div class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1">機器</label>
+            <select id="brew-machine" class="w-full p-2 border rounded-lg text-sm bg-white"><option value="">載入中...</option></select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1">磨豆機</label>
+            <select id="brew-grinder" class="w-full p-2 border rounded-lg text-sm bg-white"><option value="">載入中...</option></select>
           </div>
         </div>
-      `;
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1">粉碗</label>
+            <select id="brew-basket" class="w-full p-2 border rounded-lg text-sm bg-white"><option value="">載入中...</option></select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1">研磨刻度 (可空白)</label>
+            <input type="text" id="brew-grind-size" placeholder="例如：2.5" class="w-full p-2 border rounded-lg text-sm">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">粉重 (g) (可空白)</label>
+          <input type="number" step="0.1" id="brew-weight" placeholder="18.0" class="w-full p-2 border rounded-lg text-sm">
+        </div>
+
+        <!-- 切換開關按鈕 (WDT / 分水網 / 濾紙) -->
+        <div class="space-y-3 pt-2">
+          <div class="flex justify-between items-center border-t pt-2">
+            <span class="text-sm font-medium">WDT 針狀整粉器</span>
+            <input type="checkbox" id="brew-wdt" class="w-5 h-5 accent-amber-800">
+          </div>
+          <div class="flex justify-between items-center border-t pt-2">
+            <span class="text-sm font-medium">分水網 (Puck Screen)</span>
+            <input type="checkbox" id="brew-puck-screen" class="w-5 h-5 accent-amber-800">
+          </div>
+          <div class="flex justify-between items-center border-t pt-2">
+            <span class="text-sm font-medium">濾紙</span>
+            <input type="checkbox" id="brew-filter-paper" class="w-5 h-5 accent-amber-800">
+          </div>
+        </div>
+
+        <button onclick="goToStep(2)" class="w-full bg-amber-800 text-white py-3 rounded-xl font-bold mt-4 shadow hover:bg-amber-900 active:scale-95 transition">下一步：計時沖煮 <i class="fa-solid fa-arrow-right ml-1"></i></button>
+      </div>
+
+      <!-- 步驟 2: 計時器 -->
+      <div id="brew-step-2" class="hidden space-y-6 bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center">
+        <h2 class="font-bold text-gray-700">步驟 2：沖煮計時</h2>
+        
+        <div class="text-6xl font-mono font-bold text-gray-800 my-8" id="timer-display">00.0</div>
+
+        <div id="timer-controls-initial">
+          <button onclick="startTimer()" class="w-32 h-32 bg-emerald-600 text-white rounded-full font-bold text-xl shadow-lg hover:bg-emerald-700 active:scale-90 transition inline-flex flex-col items-center justify-center">
+            <i class="fa-solid fa-play text-2xl mb-1"></i>開始
+          </button>
+        </div>
+
+        <div id="timer-controls-running" class="hidden">
+          <button onclick="pauseTimer()" class="w-32 h-32 bg-amber-600 text-white rounded-full font-bold text-xl shadow-lg hover:bg-amber-700 active:scale-90 transition inline-flex flex-col items-center justify-center">
+            <i class="fa-solid fa-pause text-2xl mb-1"></i>暫停
+          </button>
+        </div>
+
+        <div id="timer-controls-paused" class="hidden space-y-3">
+          <div class="flex justify-center gap-4">
+            <button onclick="startTimer()" class="flex-1 bg-emerald-600 text-white py-3 rounded-xl font-bold shadow"><i class="fa-solid fa-play mr-1"></i>繼續</button>
+            <button onclick="resetTimer()" class="flex-1 bg-gray-500 text-white py-3 rounded-xl font-bold shadow"><i class="fa-solid fa-rotate-left mr-1"></i>重置</button>
+          </div>
+          <button onclick="finishTimer()" class="w-full bg-amber-800 text-white py-3 rounded-xl font-bold shadow"><i class="fa-solid fa-check mr-1"></i>完成並帶入時間</button>
+        </div>
+
+        <div class="pt-4 border-t">
+          <button onclick="goToStep(1)" class="text-xs text-gray-400 underline">返回上一步驟</button>
+        </div>
+      </div>
+
+      <!-- 步驟 3: 結果記錄 -->
+      <div id="brew-step-3" class="hidden space-y-4 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+        <h2 class="font-bold text-gray-700 border-b pb-2">步驟 3：結果與評價</h2>
+
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">萃取時間 (秒)</label>
+          <input type="number" step="0.1" id="brew-time" class="w-full p-2 border rounded-lg text-sm">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">萃取量 (g) (可空白)</label>
+          <input type="number" step="0.1" id="brew-yield" placeholder="36.0" class="w-full p-2 border rounded-lg text-sm">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">分數 (0 ~ 100)</label>
+          <input type="number" id="brew-rating" min="0" max="100" placeholder="85" class="w-full p-2 border rounded-lg text-sm">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">評價 / 風味筆記</label>
+          <textarea id="brew-notes" rows="3" placeholder="酸甜平衡，帶有柑橘香氣..." class="w-full p-2 border rounded-lg text-sm"></textarea>
+        </div>
+
+        <button onclick="submitShot()" id="btn-submit" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold shadow hover:bg-emerald-700 active:scale-95 transition">
+          <i class="fa-solid fa-floppy-disk mr-1"></i>儲存紀錄
+        </button>
+        <button onclick="goToStep(2)" class="w-full bg-gray-200 text-gray-700 py-2 rounded-xl text-sm font-semibold">返回計時器</button>
+      </div>
+
+    </section>
+
+    <!-- ==================== 頁籤 3: 設備管理 ==================== -->
+    <section id="tab-equipment" class="tab-content space-y-4">
+      <div class="grid grid-cols-4 gap-1 border-b pb-2 text-center text-xs font-bold">
+        <button onclick="selectEquipCategory('机器')" id="cat-btn-机器" class="p-2 rounded bg-amber-800 text-white">機器</button>
+        <button onclick="selectEquipCategory('磨豆机')" id="cat-btn-磨豆机" class="p-2 rounded bg-gray-200">磨豆機</button>
+        <button onclick="selectEquipCategory('粉碗')" id="cat-btn-粉碗" class="p-2 rounded bg-gray-200">粉碗</button>
+        <button onclick="selectEquipCategory('豆子')" id="cat-btn-豆子" class="p-2 rounded bg-gray-200">豆子</button>
+      </div>
+
+      <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 space-y-3">
+        <h3 id="equip-form-title" class="font-bold text-gray-700 border-b pb-2">新增機器</h3>
+        <div id="equip-dynamic-inputs" class="space-y-3">
+          <!-- 動態生成表單欄位 -->
+        </div>
+        <button onclick="submitEquipment()" class="w-full bg-amber-800 text-white py-2.5 rounded-xl font-bold shadow hover:bg-amber-900 active:scale-95 transition">
+          新增至試算表
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 底部 Tab 導覽列 -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around p-2 text-xs z-50">
+    <button onclick="switchTab('history')" id="tab-btn-history" class="flex flex-col items-center text-amber-800 font-bold">
+      <i class="fa-solid fa-clock-rotate-left text-lg"></i>
+      <span>歷史紀錄</span>
+    </button>
+    <button onclick="switchTab('brew')" id="tab-btn-brew" class="flex flex-col items-center text-gray-400">
+      <i class="fa-solid fa-circle-play text-lg"></i>
+      <span>開始沖煮</span>
+    </button>
+    <button onclick="switchTab('equipment')" id="tab-btn-equipment" class="flex flex-col items-center text-gray-400">
+      <i class="fa-solid fa-blender text-lg"></i>
+      <span>設備</span>
+    </button>
+  </nav>
+
+  <!-- JavaScript 邏輯 -->
+  <script>
+    // ⚠️ 請替換為你 Apps Script 部署後的 Web App URL
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbwAtZ5WOFsxl3JuDI7U-WRq5Cs07omJEf6fELrYby7oyU3fP5-6K4TXHgBTF9Ypzk8agQ/exec";
+
+    // 全局狀態
+    let appData = { machines: [], grinders: [], baskets: [], beans: [], history: [] };
+    let timer = { interval: null, startTime: 0, elapsedTime: 0, isRunning: false };
+    let currentEquipCat = '机器';
+
+    // 試算表欄位結構定義
+    const schema = {
+      "机器": ["名稱", "有秤", "有溫度計", "可用粉碗尺寸", "品牌", "購買路徑", "購買日", "重量(g)"],
+      "磨豆机": ["名稱", "品牌", "購買路徑", "使用日", "總共使用杯數"],
+      "粉碗": ["名稱", "容量", "手把", "品牌", "購買路徑", "Width(mm)", "使用日", "總共使用杯數"],
+      "豆子": ["名稱", "種類", "烘焙程度", "產地", "品牌", "購買路徑", "烘焙日"]
+    };
+
+    // 初始化
+    document.addEventListener("DOMContentLoaded", () => {
+      // 預設日期時間為現在
+      const now = new Date();
+      now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+      document.getElementById('brew-datetime').value = now.toISOString().slice(0, 16);
+      
+      selectEquipCategory('机器');
+      fetchData();
+    });
+
+    // 從 GAS 讀取所有資料
+    async function fetchData() {
+      if (GAS_URL.includes("YOUR_GAS_WEB_APP_URL")) {
+        alert("請先在 JavaScript 中設定你的 GAS_URL 網址！");
+        return;
+      }
+      try {
+        const res = await fetch(GAS_URL);
+        appData = await res.json();
+        renderDropdowns();
+        renderHistory();
+      } catch (err) {
+        alert("讀取資料失敗：" + err);
+      }
     }
 
-    msgContainer.appendChild(wrapper);
-    msgContainer.scrollTop = msgContainer.scrollHeight;
-    return id;
-  }
-</script>
+    // 渲染下拉選單
+    function renderDropdowns() {
+      populateSelect('brew-machine', appData.machines);
+      populateSelect('brew-grinder', appData.grinders);
+      populateSelect('brew-basket', appData.baskets);
+    }
+
+    function populateSelect(elemId, list) {
+      const select = document.getElementById(elemId);
+      select.innerHTML = '<option value="">請選擇...</option>';
+      list.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item["名稱"] || item["name"] || "";
+        opt.textContent = item["名稱"] || item["name"] || "";
+        select.appendChild(opt);
+      });
+    }
+
+    // 切換 Tab
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.getElementById(`tab-${tabName}`).classList.add('active');
+
+      ['history', 'brew', 'equipment'].forEach(t => {
+        const btn = document.getElementById(`tab-btn-${t}`);
+        if (t === tabName) {
+          btn.classList.add('text-amber-800', 'font-bold');
+          btn.classList.remove('text-gray-400');
+        } else {
+          btn.classList.remove('text-amber-800', 'font-bold');
+          btn.classList.add('text-gray-400');
+        }
+      });
+    }
+
+    // 沖煮三步驟切換
+    function goToStep(step) {
+      [1, 2, 3].forEach(s => {
+        document.getElementById(`brew-step-${s}`).classList.add('hidden');
+        const dot = document.getElementById(`step-dot-${s}`);
+        if (s <= step) {
+          dot.classList.add('bg-amber-800', 'text-white');
+          dot.classList.remove('bg-gray-300', 'text-gray-600');
+        } else {
+          dot.classList.remove('bg-amber-800', 'text-white');
+          dot.classList.add('bg-gray-300', 'text-gray-600');
+        }
+      });
+      document.getElementById(`brew-step-${step}`).classList.remove('hidden');
+    }
+
+    // 計時器邏輯
+    function startTimer() {
+      timer.startTime = Date.now() - timer.elapsedTime;
+      timer.interval = setInterval(() => {
+        timer.elapsedTime = Date.now() - timer.startTime;
+        document.getElementById('timer-display').textContent = (timer.elapsedTime / 1000).toFixed(1);
+      }, 100);
+
+      document.getElementById('timer-controls-initial').classList.add('hidden');
+      document.getElementById('timer-controls-paused').classList.add('hidden');
+      document.getElementById('timer-controls-running').classList.remove('hidden');
+    }
+
+    function pauseTimer() {
+      clearInterval(timer.interval);
+      document.getElementById('timer-controls-running').classList.add('hidden');
+      document.getElementById('timer-controls-paused').classList.remove('hidden');
+    }
+
+    function resetTimer() {
+      clearInterval(timer.interval);
+      timer.elapsedTime = 0;
+      document.getElementById('timer-display').textContent = "00.0";
+      document.getElementById('timer-controls-paused').classList.add('hidden');
+      document.getElementById('timer-controls-initial').classList.remove('hidden');
+    }
+
+    function finishTimer() {
+      const finalTime = (timer.elapsedTime / 1000).toFixed(1);
+      document.getElementById('brew-time').value = finalTime;
+      goToStep(3);
+    }
+
+    // 送出歷史紀錄
+    async function submitShot() {
+      const btn = document.getElementById('btn-submit');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i>儲存中...';
+
+      const payload = {
+        action: "add_shot",
+        datetime: document.getElementById('brew-datetime').value,
+        bean: document.getElementById('brew-bean').value,
+        machine: document.getElementById('brew-machine').value,
+        grinder: document.getElementById('brew-grinder').value,
+        basket: document.getElementById('brew-basket').value,
+        grind_size: document.getElementById('brew-grind-size').value,
+        weight: document.getElementById('brew-weight').value,
+        wdt: document.getElementById('brew-wdt').checked,
+        puck_screen: document.getElementById('brew-puck-screen').checked,
+        filter_paper: document.getElementById('brew-filter-paper').checked,
+        brew_time: document.getElementById('brew-time').value,
+        yield: document.getElementById('brew-yield').value,
+        rating: document.getElementById('brew-rating').value,
+        notes: document.getElementById('brew-notes').value
+      };
+
+      try {
+        await fetch(GAS_URL, {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        });
+        alert('儲存成功！');
+        resetTimer();
+        goToStep(1);
+        switchTab('history');
+        fetchData();
+      } catch (err) {
+        alert('儲存失敗：' + err);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-floppy-disk mr-1"></i>儲存紀錄';
+      }
+    }
+
+    // 歷史紀錄渲染
+    function renderHistory() {
+      const container = document.getElementById('history-list');
+      const search = document.getElementById('search-history').value.toLowerCase();
+      const sort = document.getElementById('sort-history').value;
+
+      let list = [...appData.history];
+
+      // 搜尋過濾
+      if (search) {
+        list = list.filter(item => 
+          (item["豆子"] && item["豆子"].toLowerCase().includes(search)) ||
+          (item["機器"] && item["機器"].toLowerCase().includes(search)) ||
+          (item["評價"] && item["評價"].toLowerCase().includes(search))
+        );
+      }
+
+      // 排序
+      if (sort === 'newest') list.reverse();
+      else if (sort === 'rating') list.sort((a, b) => (b["分數"] || 0) - (a["分數"] || 0));
+
+      if (list.length === 0) {
+        container.innerHTML = '<div class="text-center text-gray-400 py-8">尚無符合的歷史紀錄</div>';
+        return;
+      }
+
+      container.innerHTML = list.map(item => `
+        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 space-y-2">
+          <div class="flex justify-between items-start border-b pb-2">
+            <div>
+              <h3 class="font-bold text-gray-800">${item["豆子"] || "未指定豆子"}</h3>
+              <p class="text-xs text-gray-400">${item["日期時間"] || ""}</p>
+            </div>
+            ${item["分數"] ? `<span class="bg-amber-100 text-amber-800 font-bold px-2 py-1 rounded text-xs">${item["分數"]} 分</span>` : ''}
+          </div>
+          <div class="grid grid-cols-2 gap-x-2 gap-y-1 text-xs text-gray-600">
+            <div><span class="text-gray-400">設備：</span>${item["機器"] || "-"} / ${item["磨豆機"] || "-"}</div>
+            <div><span class="text-gray-400">研磨刻度：</span>${item["研磨刻度"] || "-"}</div>
+            <div><span class="text-gray-400">粉重 / 萃取：</span>${item["重量(g)"] || "-"}g → ${item["萃取量(g)"] || "-"}g (${item["粉水比"] || "-"})</div>
+            <div><span class="text-gray-400">時間：</span>${item["萃取時間(s)"] || "-"} 秒</div>
+          </div>
+          ${item["評價"] ? `<p class="text-xs text-gray-600 bg-gray-50 p-2 rounded border border-gray-100 mt-2"><i class="fa-solid fa-quote-left mr-1 text-gray-300"></i>${item["評價"]}</p>` : ''}
+        </div>
+      `).join('');
+    }
+
+    // 設備頁面動態表單生成
+    function selectEquipCategory(cat) {
+      currentEquipCat = cat;
+      ['机器', '磨豆机', '粉碗', '豆子'].forEach(c => {
+        const btn = document.getElementById(`cat-btn-${c}`);
+        if (c === cat) {
+          btn.classList.add('bg-amber-800', 'text-white');
+          btn.classList.remove('bg-gray-200');
+        } else {
+          btn.classList.remove('bg-amber-800', 'text-white');
+          btn.classList.add('bg-gray-200');
+        }
+      });
+
+      document.getElementById('equip-form-title').textContent = `新增${cat === '机器' ? '機器' : cat === '磨豆机' ? '磨豆機' : cat}`;
+      const container = document.getElementById('equip-dynamic-inputs');
+      const fields = schema[cat] || [];
+
+      container.innerHTML = fields.map(field => `
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">${field}</label>
+          <input type="text" data-field="${field}" class="equip-input w-full p-2 border rounded-lg text-sm">
+        </div>
+      `).join('');
+    }
+
+    // 送出新增設備
+    async function submitEquipment() {
+      const inputs = document.querySelectorAll('.equip-input');
+      let fields = {};
+      inputs.forEach(input => {
+        fields[input.dataset.field] = input.value;
+      });
+
+      // 轉換標籤名稱為對應工作表名稱
+      const sheetMap = { "机器": "機器", "磨豆机": "磨豆機", "粉碗": "粉碗", "豆子": "豆子" };
+
+      try {
+        await fetch(GAS_URL, {
+          method: 'POST',
+          body: JSON.stringify({
+            action: "add_device",
+            targetSheet: sheetMap[currentEquipCat],
+            fields: fields
+          })
+        });
+        alert('新增成功！');
+        inputs.forEach(i => i.value = '');
+        fetchData();
+      } catch (err) {
+        alert('新增失敗：' + err);
+      }
+    }
+  </script>
 </body>
 </html>
