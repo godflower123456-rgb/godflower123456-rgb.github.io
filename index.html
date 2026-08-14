@@ -6,21 +6,20 @@
   <title>Espresso 沖煮記錄器</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- FontAwesome 圖示 -->
+  <!-- FontAwesome 圖示 CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* iOS 風格選單與體驗優化 */
     body { -webkit-tap-highlight-color: transparent; }
     .tab-content { display: none; }
     .tab-content.active { display: block; }
   </style>
 </head>
-<body class="bg-gray-100 text-gray-800 pb-20 font-sans">
+<body class="bg-gray-100 text-gray-800 pb-20 font-sans select-none">
 
   <!-- Header -->
   <header class="bg-amber-900 text-white p-4 text-center text-lg font-bold shadow-md sticky top-0 z-50 flex justify-between items-center">
-    <span><i class="fa-solid font-mug-hot mr-2"></i>Espresso Tracker</span>
-    <button onclick="fetchData()" class="text-xs bg-amber-800 hover:bg-amber-700 px-3 py-1 rounded-full border border-amber-600">
+    <span><i class="fa-solid fa-mug-hot mr-2"></i>Espresso Tracker</span>
+    <button onclick="fetchData()" class="text-xs bg-amber-800 hover:bg-amber-700 px-3 py-1 rounded-full border border-amber-600 transition">
       <i class="fa-solid fa-rotate mr-1"></i>同步
     </button>
   </header>
@@ -30,8 +29,8 @@
     <!-- ==================== 頁籤 1: 歷史紀錄 ==================== -->
     <section id="tab-history" class="tab-content active space-y-4">
       <div class="flex gap-2">
-        <input type="text" id="search-history" oninput="renderHistory()" placeholder="搜尋豆子、機器、評價..." class="flex-1 p-2 border border-gray-300 rounded-lg text-sm bg-white shadow-sm">
-        <select id="sort-history" onchange="renderHistory()" class="p-2 border border-gray-300 rounded-lg text-sm bg-white shadow-sm">
+        <input type="text" id="search-history" oninput="renderHistory()" placeholder="搜尋豆子、機器、評價..." class="flex-1 p-2 border border-gray-300 rounded-lg text-sm bg-white shadow-sm focus:outline-none focus:ring-1 focus:ring-amber-800">
+        <select id="sort-history" onchange="renderHistory()" class="p-2 border border-gray-300 rounded-lg text-sm bg-white shadow-sm focus:outline-none">
           <option value="newest">最新優先</option>
           <option value="oldest">最舊優先</option>
           <option value="rating">分數最高</option>
@@ -39,16 +38,16 @@
       </div>
 
       <div id="history-list" class="space-y-3">
-        <div class="text-center text-gray-400 py-10"><i class="fa-solid fa-spinner fa-spin text-2xl mb-2"></i><br>載入資料中...</div>
+        <div class="text-center text-gray-400 py-10"><i class="fa-solid fa-spinner fa-spin text-2xl mb-2"></i><br>資料載入中...</div>
       </div>
     </section>
 
     <!-- ==================== 頁籤 2: 開始沖煮 ==================== -->
     <section id="tab-brew" class="tab-content">
       
-      <!-- 步驟進度條 -->
+      <!-- 步驟指示器 -->
       <div class="flex items-center justify-between mb-6 px-4">
-        <div id="step-dot-1" class="w-8 h-8 rounded-full bg-amber-800 text-white flex items-center justify-center font-bold text-sm">1</div>
+        <div id="step-dot-1" class="w-8 h-8 rounded-full bg-amber-800 text-white flex items-center justify-center font-bold text-sm shadow">1</div>
         <div class="h-1 flex-1 bg-gray-300 mx-2"></div>
         <div id="step-dot-2" class="w-8 h-8 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center font-bold text-sm">2</div>
         <div class="h-1 flex-1 bg-gray-300 mx-2"></div>
@@ -61,58 +60,60 @@
         
         <div>
           <label class="block text-xs font-semibold text-gray-500 mb-1">日期時間</label>
-          <input type="datetime-local" id="brew-datetime" class="w-full p-2 border rounded-lg text-sm">
+          <input type="datetime-local" id="brew-datetime" class="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white">
         </div>
 
         <div>
           <label class="block text-xs font-semibold text-gray-500 mb-1">豆子</label>
-          <input type="text" id="brew-bean" placeholder="例如：衣索比亞 耶加雪菲" class="w-full p-2 border rounded-lg text-sm">
+          <select id="brew-bean" class="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white"><option value="">載入中...</option></select>
         </div>
 
         <div class="grid grid-cols-2 gap-2">
           <div>
             <label class="block text-xs font-semibold text-gray-500 mb-1">機器</label>
-            <select id="brew-machine" class="w-full p-2 border rounded-lg text-sm bg-white"><option value="">載入中...</option></select>
+            <select id="brew-machine" class="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white"><option value="">載入中...</option></select>
           </div>
           <div>
             <label class="block text-xs font-semibold text-gray-500 mb-1">磨豆機</label>
-            <select id="brew-grinder" class="w-full p-2 border rounded-lg text-sm bg-white"><option value="">載入中...</option></select>
+            <select id="brew-grinder" class="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white"><option value="">載入中...</option></select>
           </div>
         </div>
 
         <div class="grid grid-cols-2 gap-2">
           <div>
             <label class="block text-xs font-semibold text-gray-500 mb-1">粉碗</label>
-            <select id="brew-basket" class="w-full p-2 border rounded-lg text-sm bg-white"><option value="">載入中...</option></select>
+            <select id="brew-basket" class="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white"><option value="">載入中...</option></select>
           </div>
           <div>
             <label class="block text-xs font-semibold text-gray-500 mb-1">研磨刻度 (可空白)</label>
-            <input type="text" id="brew-grind-size" placeholder="例如：2.5" class="w-full p-2 border rounded-lg text-sm">
+            <input type="text" id="brew-grind-size" placeholder="例如：2.5" class="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white">
           </div>
         </div>
 
         <div>
           <label class="block text-xs font-semibold text-gray-500 mb-1">粉重 (g) (可空白)</label>
-          <input type="number" step="0.1" id="brew-weight" placeholder="18.0" class="w-full p-2 border rounded-lg text-sm">
+          <input type="number" step="0.1" id="brew-weight" placeholder="18.0" class="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white">
         </div>
 
-        <!-- 切換開關按鈕 (WDT / 分水網 / 濾紙) -->
-        <div class="space-y-3 pt-2">
-          <div class="flex justify-between items-center border-t pt-2">
-            <span class="text-sm font-medium">WDT 針狀整粉器</span>
-            <input type="checkbox" id="brew-wdt" class="w-5 h-5 accent-amber-800">
+        <!-- 切換按鈕 (WDT / 分水網 / 濾紙) -->
+        <div class="space-y-3 pt-2 border-t">
+          <div class="flex justify-between items-center">
+            <span class="text-sm font-medium text-gray-700">WDT 針狀整粉器</span>
+            <input type="checkbox" id="brew-wdt" class="w-5 h-5 accent-amber-800 rounded">
           </div>
           <div class="flex justify-between items-center border-t pt-2">
-            <span class="text-sm font-medium">分水網 (Puck Screen)</span>
-            <input type="checkbox" id="brew-puck-screen" class="w-5 h-5 accent-amber-800">
+            <span class="text-sm font-medium text-gray-700">分水網 (Puck Screen)</span>
+            <input type="checkbox" id="brew-puck-screen" class="w-5 h-5 accent-amber-800 rounded">
           </div>
           <div class="flex justify-between items-center border-t pt-2">
-            <span class="text-sm font-medium">濾紙</span>
-            <input type="checkbox" id="brew-filter-paper" class="w-5 h-5 accent-amber-800">
+            <span class="text-sm font-medium text-gray-700">濾紙</span>
+            <input type="checkbox" id="brew-filter-paper" class="w-5 h-5 accent-amber-800 rounded">
           </div>
         </div>
 
-        <button onclick="goToStep(2)" class="w-full bg-amber-800 text-white py-3 rounded-xl font-bold mt-4 shadow hover:bg-amber-900 active:scale-95 transition">下一步：計時沖煮 <i class="fa-solid fa-arrow-right ml-1"></i></button>
+        <button onclick="goToStep(2)" class="w-full bg-amber-800 text-white py-3 rounded-xl font-bold mt-4 shadow hover:bg-amber-900 active:scale-95 transition">
+          下一步：計時沖煮 <i class="fa-solid fa-arrow-right ml-1"></i>
+        </button>
       </div>
 
       <!-- 步驟 2: 計時器 -->
@@ -121,6 +122,7 @@
         
         <div class="text-6xl font-mono font-bold text-gray-800 my-8" id="timer-display">00.0</div>
 
+        <!-- 計時器按鈕狀態 -->
         <div id="timer-controls-initial">
           <button onclick="startTimer()" class="w-32 h-32 bg-emerald-600 text-white rounded-full font-bold text-xl shadow-lg hover:bg-emerald-700 active:scale-90 transition inline-flex flex-col items-center justify-center">
             <i class="fa-solid fa-play text-2xl mb-1"></i>開始
@@ -134,7 +136,7 @@
         </div>
 
         <div id="timer-controls-paused" class="hidden space-y-3">
-          <div class="flex justify-center gap-4">
+          <div class="flex justify-center gap-3">
             <button onclick="startTimer()" class="flex-1 bg-emerald-600 text-white py-3 rounded-xl font-bold shadow"><i class="fa-solid fa-play mr-1"></i>繼續</button>
             <button onclick="resetTimer()" class="flex-1 bg-gray-500 text-white py-3 rounded-xl font-bold shadow"><i class="fa-solid fa-rotate-left mr-1"></i>重置</button>
           </div>
@@ -152,22 +154,22 @@
 
         <div>
           <label class="block text-xs font-semibold text-gray-500 mb-1">萃取時間 (秒)</label>
-          <input type="number" step="0.1" id="brew-time" class="w-full p-2 border rounded-lg text-sm">
+          <input type="number" step="0.1" id="brew-time" class="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white">
         </div>
 
         <div>
           <label class="block text-xs font-semibold text-gray-500 mb-1">萃取量 (g) (可空白)</label>
-          <input type="number" step="0.1" id="brew-yield" placeholder="36.0" class="w-full p-2 border rounded-lg text-sm">
+          <input type="number" step="0.1" id="brew-yield" placeholder="36.0" class="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white">
         </div>
 
         <div>
           <label class="block text-xs font-semibold text-gray-500 mb-1">分數 (0 ~ 100)</label>
-          <input type="number" id="brew-rating" min="0" max="100" placeholder="85" class="w-full p-2 border rounded-lg text-sm">
+          <input type="number" id="brew-rating" min="0" max="100" placeholder="85" class="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white">
         </div>
 
         <div>
           <label class="block text-xs font-semibold text-gray-500 mb-1">評價 / 風味筆記</label>
-          <textarea id="brew-notes" rows="3" placeholder="酸甜平衡，帶有柑橘香氣..." class="w-full p-2 border rounded-lg text-sm"></textarea>
+          <textarea id="brew-notes" rows="3" placeholder="酸甜平衡，帶有花香..." class="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white"></textarea>
         </div>
 
         <button onclick="submitShot()" id="btn-submit" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold shadow hover:bg-emerald-700 active:scale-95 transition">
@@ -180,27 +182,54 @@
 
     <!-- ==================== 頁籤 3: 設備管理 ==================== -->
     <section id="tab-equipment" class="tab-content space-y-4">
-      <div class="grid grid-cols-4 gap-1 border-b pb-2 text-center text-xs font-bold">
-        <button onclick="selectEquipCategory('机器')" id="cat-btn-机器" class="p-2 rounded bg-amber-800 text-white">機器</button>
-        <button onclick="selectEquipCategory('磨豆机')" id="cat-btn-磨豆机" class="p-2 rounded bg-gray-200">磨豆機</button>
-        <button onclick="selectEquipCategory('粉碗')" id="cat-btn-粉碗" class="p-2 rounded bg-gray-200">粉碗</button>
-        <button onclick="selectEquipCategory('豆子')" id="cat-btn-豆子" class="p-2 rounded bg-gray-200">豆子</button>
+      <!-- 四大分類按鈕 -->
+      <div class="grid grid-cols-4 gap-1 bg-gray-200 p-1 rounded-xl text-center text-xs font-bold">
+        <button onclick="selectEquipCategory('机器')" id="cat-btn-机器" class="py-2 rounded-lg bg-amber-800 text-white transition shadow-sm">機器</button>
+        <button onclick="selectEquipCategory('磨豆机')" id="cat-btn-磨豆机" class="py-2 rounded-lg text-gray-600 transition">磨豆機</button>
+        <button onclick="selectEquipCategory('粉碗')" id="cat-btn-粉碗" class="py-2 rounded-lg text-gray-600 transition">粉碗</button>
+        <button onclick="selectEquipCategory('豆子')" id="cat-btn-豆子" class="py-2 rounded-lg text-gray-600 transition">豆子</button>
       </div>
 
-      <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 space-y-3">
-        <h3 id="equip-form-title" class="font-bold text-gray-700 border-b pb-2">新增機器</h3>
-        <div id="equip-dynamic-inputs" class="space-y-3">
-          <!-- 動態生成表單欄位 -->
+      <!-- 現有設備列表卡片 -->
+      <div class="space-y-3">
+        <div class="flex justify-between items-center px-1">
+          <h3 id="equip-list-title" class="font-bold text-gray-700 text-sm">現有機器列表</h3>
+          <span id="equip-count-badge" class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-bold">0 個</span>
         </div>
-        <button onclick="submitEquipment()" class="w-full bg-amber-800 text-white py-2.5 rounded-xl font-bold shadow hover:bg-amber-900 active:scale-95 transition">
-          新增至試算表
+        
+        <div id="equip-card-list" class="space-y-2">
+          <!-- 動態渲染卡片列表 -->
+        </div>
+      </div>
+
+      <!-- 新增設備展開按鈕與隱藏表單 -->
+      <div class="pt-2">
+        <button onclick="toggleEquipForm()" id="btn-toggle-form" class="w-full bg-white border-2 border-dashed border-amber-800 text-amber-800 py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-sm active:scale-98 transition">
+          <i class="fa-solid fa-plus"></i> <span id="btn-toggle-text">新增設備</span>
         </button>
+
+        <div id="equip-form-container" class="hidden mt-4 bg-white p-4 rounded-xl shadow-sm border border-gray-100 space-y-4">
+          <h3 id="equip-form-title" class="font-bold text-gray-800 border-b pb-2">新增機器</h3>
+          
+          <form id="equip-form" onsubmit="event.preventDefault(); submitEquipment();" class="space-y-3">
+            <div id="equip-dynamic-inputs" class="space-y-3">
+              <!-- 動態生成相應欄位 -->
+            </div>
+
+            <div class="flex gap-2 pt-2">
+              <button type="button" onclick="toggleEquipForm(false)" class="flex-1 bg-gray-200 text-gray-700 py-2.5 rounded-xl font-bold text-sm">取消</button>
+              <button type="submit" id="btn-save-equip" class="flex-2 bg-amber-800 text-white py-2.5 rounded-xl font-bold text-sm shadow hover:bg-amber-900 active:scale-95 transition">
+                儲存新增
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </section>
 
   </main>
 
-  <!-- 底部 Tab 導覽列 -->
+  <!-- 底部導覽列 -->
   <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around p-2 text-xs z-50">
     <button onclick="switchTab('history')" id="tab-btn-history" class="flex flex-col items-center text-amber-800 font-bold">
       <i class="fa-solid fa-clock-rotate-left text-lg"></i>
@@ -216,27 +245,59 @@
     </button>
   </nav>
 
-  <!-- JavaScript 邏輯 -->
+  <!-- JavaScript 主程式碼 -->
   <script>
-    // ⚠️ 請替換為你 Apps Script 部署後的 Web App URL
+    // ⚠️ 請修改此處為你部署 Apps Script 取得的 Web App URL
     const GAS_URL = "https://script.google.com/macros/s/AKfycbwAtZ5WOFsxl3JuDI7U-WRq5Cs07omJEf6fELrYby7oyU3fP5-6K4TXHgBTF9Ypzk8agQ/exec";
 
     // 全局狀態
     let appData = { machines: [], grinders: [], baskets: [], beans: [], history: [] };
-    let timer = { interval: null, startTime: 0, elapsedTime: 0, isRunning: false };
+    let timer = { interval: null, startTime: 0, elapsedTime: 0 };
     let currentEquipCat = '机器';
 
-    // 試算表欄位結構定義
-    const schema = {
-      "机器": ["名稱", "有秤", "有溫度計", "可用粉碗尺寸", "品牌", "購買路徑", "購買日", "重量(g)"],
-      "磨豆机": ["名稱", "品牌", "購買路徑", "使用日", "總共使用杯數"],
-      "粉碗": ["名稱", "容量", "手把", "品牌", "購買路徑", "Width(mm)", "使用日", "總共使用杯數"],
-      "豆子": ["名稱", "種類", "烘焙程度", "產地", "品牌", "購買路徑", "烘焙日"]
+    // 設備表單欄位定義結構
+    const equipSchemas = {
+      "机器": [
+        { name: "名稱", type: "text", required: true, placeholder: "例如：DeLonghi EC685" },
+        { name: "有秤", type: "toggle", default: "無" },
+        { name: "有溫度計", type: "toggle", default: "無" },
+        { name: "可用粉碗尺寸", type: "text", placeholder: "例如：51mm / 58mm" },
+        { name: "品牌", type: "text", placeholder: "可空白" },
+        { name: "購買路徑", type: "text", placeholder: "例如：PChome" },
+        { name: "購買日", type: "date" },
+        { name: "重量(g)", type: "number", placeholder: "可空白" }
+      ],
+      "磨豆机": [
+        { name: "名稱", type: "text", required: true, placeholder: "例如：DF64 Gen2" },
+        { name: "品牌", type: "text", placeholder: "可空白" },
+        { name: "購買路徑", type: "text", placeholder: "可空白" },
+        { name: "使用日", type: "date" },
+        { name: "總共使用杯數", type: "readonly" }
+      ],
+      "粉碗": [
+        { name: "名稱", type: "text", required: true, placeholder: "例如：IMS 18g 雙杯粉碗" },
+        { name: "容量", type: "select", options: ["雙杯份", "單杯份"] },
+        { name: "手把", type: "toggle", default: "無" },
+        { name: "品牌", type: "text", placeholder: "可空白" },
+        { name: "購買路徑", type: "text", placeholder: "可空白" },
+        { name: "Width(mm)", type: "number", placeholder: "例如：58" },
+        { name: "使用日", type: "date" },
+        { name: "總共使用杯數", type: "readonly" }
+      ],
+      "豆子": [
+        { name: "名稱", type: "text", required: true, placeholder: "例如：花魁 G1" },
+        { name: "種類", type: "select", options: ["阿拉比可", "羅布斯塔", "混豆"] },
+        { name: "烘焙程度", type: "select", options: ["淺焙", "中淺焙", "中焙", "中深焙", "深焙"] },
+        { name: "產地", type: "text", placeholder: "例如：衣索比亞" },
+        { name: "品牌", type: "text", placeholder: "可空白" },
+        { name: "購買路徑", type: "text", placeholder: "可空白" },
+        { name: "烘焙日", type: "date" }
+      ]
     };
 
-    // 初始化
+    // 頁面初始化
     document.addEventListener("DOMContentLoaded", () => {
-      // 預設日期時間為現在
+      // 預設日期時間為當前時刻
       const now = new Date();
       now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
       document.getElementById('brew-datetime').value = now.toISOString().slice(0, 16);
@@ -245,10 +306,10 @@
       fetchData();
     });
 
-    // 從 GAS 讀取所有資料
+    // 從後端拉取全部資料
     async function fetchData() {
       if (GAS_URL.includes("YOUR_GAS_WEB_APP_URL")) {
-        alert("請先在 JavaScript 中設定你的 GAS_URL 網址！");
+        alert("請在 index.html 檔案中的 JavaScript 中填入你的 GAS_URL！");
         return;
       }
       try {
@@ -256,13 +317,15 @@
         appData = await res.json();
         renderDropdowns();
         renderHistory();
+        renderEquipList(currentEquipCat);
       } catch (err) {
-        alert("讀取資料失敗：" + err);
+        alert("讀取資料失敗，請重新同步：" + err);
       }
     }
 
-    // 渲染下拉選單
+    // 填入沖煮頁面的選項選單
     function renderDropdowns() {
+      populateSelect('brew-bean', appData.beans);
       populateSelect('brew-machine', appData.machines);
       populateSelect('brew-grinder', appData.grinders);
       populateSelect('brew-basket', appData.baskets);
@@ -271,15 +334,18 @@
     function populateSelect(elemId, list) {
       const select = document.getElementById(elemId);
       select.innerHTML = '<option value="">請選擇...</option>';
-      list.forEach(item => {
-        const opt = document.createElement('option');
-        opt.value = item["名稱"] || item["name"] || "";
-        opt.textContent = item["名稱"] || item["name"] || "";
-        select.appendChild(opt);
+      (list || []).forEach(item => {
+        const name = item["名稱"] || item["name"] || "";
+        if (name) {
+          const opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = name;
+          select.appendChild(opt);
+        }
       });
     }
 
-    // 切換 Tab
+    // 切換主頁籤
     function switchTab(tabName) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
       document.getElementById(`tab-${tabName}`).classList.add('active');
@@ -345,7 +411,7 @@
       goToStep(3);
     }
 
-    // 送出歷史紀錄
+    // 儲存沖煮歷史紀錄
     async function submitShot() {
       const btn = document.getElementById('btn-submit');
       btn.disabled = true;
@@ -374,7 +440,7 @@
           method: 'POST',
           body: JSON.stringify(payload)
         });
-        alert('儲存成功！');
+        alert('沖煮紀錄已成功儲存！');
         resetTimer();
         goToStep(1);
         switchTab('history');
@@ -387,26 +453,24 @@
       }
     }
 
-    // 歷史紀錄渲染
+    // 渲染歷史紀錄列表
     function renderHistory() {
       const container = document.getElementById('history-list');
       const search = document.getElementById('search-history').value.toLowerCase();
       const sort = document.getElementById('sort-history').value;
 
-      let list = [...appData.history];
+      let list = [...(appData.history || [])];
 
-      // 搜尋過濾
       if (search) {
         list = list.filter(item => 
-          (item["豆子"] && item["豆子"].toLowerCase().includes(search)) ||
-          (item["機器"] && item["機器"].toLowerCase().includes(search)) ||
-          (item["評價"] && item["評價"].toLowerCase().includes(search))
+          (item["豆子"] && item["豆子"].toString().toLowerCase().includes(search)) ||
+          (item["機器"] && item["機器"].toString().toLowerCase().includes(search)) ||
+          (item["評價"] && item["評價"].toString().toLowerCase().includes(search))
         );
       }
 
-      // 排序
       if (sort === 'newest') list.reverse();
-      else if (sort === 'rating') list.sort((a, b) => (b["分數"] || 0) - (a["分數"] || 0));
+      else if (sort === 'rating') list.sort((a, b) => (parseFloat(b["分數"]) || 0) - (parseFloat(a["分數"]) || 0));
 
       if (list.length === 0) {
         container.innerHTML = '<div class="text-center text-gray-400 py-8">尚無符合的歷史紀錄</div>';
@@ -425,49 +489,203 @@
           <div class="grid grid-cols-2 gap-x-2 gap-y-1 text-xs text-gray-600">
             <div><span class="text-gray-400">設備：</span>${item["機器"] || "-"} / ${item["磨豆機"] || "-"}</div>
             <div><span class="text-gray-400">研磨刻度：</span>${item["研磨刻度"] || "-"}</div>
-            <div><span class="text-gray-400">粉重 / 萃取：</span>${item["重量(g)"] || "-"}g → ${item["萃取量(g)"] || "-"}g (${item["粉水比"] || "-"})</div>
-            <div><span class="text-gray-400">時間：</span>${item["萃取時間(s)"] || "-"} 秒</div>
+            <div><span class="text-gray-400">粉重/萃取：</span>${item["重量(g)"] || "-"}g → ${item["萃取量(g)"] || "-"}g (${item["粉水比"] || "-"})</div>
+            <div><span class="text-gray-400">萃取時間：</span>${item["萃取時間(s)"] || "-"} 秒</div>
           </div>
-          ${item["評價"] ? `<p class="text-xs text-gray-600 bg-gray-50 p-2 rounded border border-gray-100 mt-2"><i class="fa-solid fa-quote-left mr-1 text-gray-300"></i>${item["評價"]}</p>` : ''}
+          ${item["評價"] ? `<p class="text-xs text-gray-600 bg-gray-50 p-2 rounded border border-gray-100 mt-1"><i class="fa-solid fa-quote-left mr-1 text-gray-300"></i>${item["評價"]}</p>` : ''}
         </div>
       `).join('');
     }
 
-    // 設備頁面動態表單生成
+    // 切換設備大類別
     function selectEquipCategory(cat) {
       currentEquipCat = cat;
       ['机器', '磨豆机', '粉碗', '豆子'].forEach(c => {
         const btn = document.getElementById(`cat-btn-${c}`);
         if (c === cat) {
-          btn.classList.add('bg-amber-800', 'text-white');
-          btn.classList.remove('bg-gray-200');
+          btn.className = "py-2 rounded-lg bg-amber-800 text-white transition font-bold shadow-sm";
         } else {
-          btn.classList.remove('bg-amber-800', 'text-white');
-          btn.classList.add('bg-gray-200');
+          btn.className = "py-2 rounded-lg text-gray-600 hover:text-gray-900 transition";
         }
       });
 
-      document.getElementById('equip-form-title').textContent = `新增${cat === '机器' ? '機器' : cat === '磨豆机' ? '磨豆機' : cat}`;
-      const container = document.getElementById('equip-dynamic-inputs');
-      const fields = schema[cat] || [];
-
-      container.innerHTML = fields.map(field => `
-        <div>
-          <label class="block text-xs font-semibold text-gray-500 mb-1">${field}</label>
-          <input type="text" data-field="${field}" class="equip-input w-full p-2 border rounded-lg text-sm">
-        </div>
-      `).join('');
+      toggleEquipForm(false);
+      renderEquipList(cat);
+      buildEquipForm(cat);
     }
 
-    // 送出新增設備
+    // 展開/收起設備新增表單
+    function toggleEquipForm(show) {
+      const container = document.getElementById('equip-form-container');
+      const btnText = document.getElementById('btn-toggle-text');
+      
+      const isHidden = container.classList.contains('hidden');
+      const targetState = show !== undefined ? show : isHidden;
+
+      if (targetState) {
+        container.classList.remove('hidden');
+        btnText.textContent = "收起表單";
+      } else {
+        container.classList.add('hidden');
+        btnText.textContent = `新增${currentEquipCat === '机器' ? '機器' : currentEquipCat === '磨豆机' ? '磨豆機' : currentEquipCat}`;
+      }
+    }
+
+    // 渲染設備卡片列表
+    function renderEquipList(cat) {
+      const container = document.getElementById('equip-card-list');
+      const title = document.getElementById('equip-list-title');
+      const badge = document.getElementById('equip-count-badge');
+
+      const catMap = { "机器": "machines", "磨豆机": "grinders", "粉碗": "baskets", "豆子": "beans" };
+      const items = appData[catMap[cat]] || [];
+
+      title.textContent = `現有${cat === '机器' ? '機器' : cat === '磨豆机' ? '磨豆機' : cat}列表`;
+      badge.textContent = `${items.length} 個`;
+
+      if (items.length === 0) {
+        container.innerHTML = `<div class="text-center text-gray-400 py-6 text-xs bg-white rounded-xl border border-gray-100">目前尚無${cat}資料，點擊下方按鈕即可新增。</div>`;
+        return;
+      }
+
+      container.innerHTML = items.map(item => {
+        const name = item["名稱"] || item["name"] || "未命名";
+        
+        // 從歷史參數中動態計算使用杯數
+        let cupCount = 0;
+        if (cat === "磨豆机") cupCount = (appData.history || []).filter(h => h["磨豆機"] === name).length;
+        else if (cat === "粉碗") cupCount = (appData.history || []).filter(h => h["粉碗"] === name).length;
+
+        return `
+          <div class="bg-white p-3 rounded-xl border border-gray-100 shadow-sm space-y-1">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-gray-800 text-sm">${name}</span>
+              ${item["品牌"] ? `<span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">${item["品牌"]}</span>` : ''}
+            </div>
+            <div class="grid grid-cols-2 gap-x-2 gap-y-1 text-xs text-gray-500 pt-1">
+              ${cat === '机器' ? `
+                <div><span class="text-gray-400">秤/溫度計：</span>${item["有秤"] === "有" ? "秤✓" : "無秤"} / ${item["有溫度計"] === "有" ? "溫✓" : "無溫"}</div>
+                <div><span class="text-gray-400">尺寸：</span>${item["可用粉碗尺寸"] || "-"}</div>
+              ` : ''}
+              ${cat === '磨豆机' ? `
+                <div><span class="text-gray-400">使用日：</span>${item["使用日"] || "-"}</div>
+                <div><span class="text-gray-400">總使用：</span><b class="text-amber-800">${cupCount}</b> 杯</div>
+              ` : ''}
+              ${cat === '粉碗' ? `
+                <div><span class="text-gray-400">容量/寬度：</span>${item["容量"] || "-"} (${item["Width(mm)"] ? item["Width(mm)"]+'mm' : '-'})</div>
+                <div><span class="text-gray-400">總使用：</span><b class="text-amber-800">${cupCount}</b> 杯</div>
+              ` : ''}
+              ${cat === '豆子' ? `
+                <div><span class="text-gray-400">種類/烘焙：</span>${item["種類"] || "-"} (${item["烘焙程度"] || "-"})</div>
+                <div><span class="text-gray-400">烘焙日：</span>${item["烘焙日"] || "-"}</div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 動態建構新增設備表單
+    function buildEquipForm(cat) {
+      const container = document.getElementById('equip-dynamic-inputs');
+      const title = document.getElementById('equip-form-title');
+      const schema = equipSchemas[cat] || [];
+
+      title.textContent = `新增${cat === '机器' ? '機器' : cat === '磨豆机' ? '磨豆機' : cat}`;
+
+      container.innerHTML = schema.map(field => {
+        const fieldId = `field-${field.name}`;
+
+        if (field.type === 'toggle') {
+          return `
+            <div class="flex justify-between items-center border-b pb-2 pt-1">
+              <label class="text-xs font-semibold text-gray-600">${field.name}</label>
+              <div class="inline-flex rounded-lg border border-gray-200 p-0.5 bg-gray-50">
+                <button type="button" onclick="setToggleValue('${fieldId}', '有')" id="${fieldId}-btn-yes" class="px-3 py-1 text-xs rounded-md font-bold transition bg-emerald-600 text-white shadow-sm">有</button>
+                <button type="button" onclick="setToggleValue('${fieldId}', '無')" id="${fieldId}-btn-no" class="px-3 py-1 text-xs rounded-md font-bold transition text-gray-400">無</button>
+              </div>
+              <input type="hidden" id="${fieldId}" name="${field.name}" value="有">
+            </div>
+          `;
+        }
+
+        if (field.type === 'select') {
+          return `
+            <div>
+              <label class="block text-xs font-semibold text-gray-500 mb-1">${field.name}</label>
+              <select id="${fieldId}" name="${field.name}" class="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white">
+                ${field.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+              </select>
+            </div>
+          `;
+        }
+
+        if (field.type === 'date') {
+          return `
+            <div>
+              <label class="block text-xs font-semibold text-gray-500 mb-1">${field.name}</label>
+              <input type="date" id="${fieldId}" name="${field.name}" class="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white">
+            </div>
+          `;
+        }
+
+        if (field.type === 'readonly') {
+          return `
+            <div>
+              <label class="block text-xs font-semibold text-gray-500 mb-1">${field.name}</label>
+              <input type="text" id="${fieldId}" name="${field.name}" value="0 (新增後自動根據歷史沖煮紀錄計算)" disabled class="w-full p-2 border border-gray-200 bg-gray-100 rounded-lg text-sm text-gray-400">
+            </div>
+          `;
+        }
+
+        return `
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1">${field.name} ${field.required ? '<span class="text-red-500">*</span>' : ''}</label>
+            <input type="${field.type === 'number' ? 'number' : 'text'}" 
+                   id="${fieldId}" 
+                   name="${field.name}" 
+                   placeholder="${field.placeholder || ''}" 
+                   ${field.required ? 'required' : ''}
+                   class="w-full p-2 border border-gray-300 rounded-lg text-sm bg-white">
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 切換按鈕值 setToggleValue
+    function setToggleValue(id, val) {
+      document.getElementById(id).value = val;
+      const btnYes = document.getElementById(`${id}-btn-yes`);
+      const btnNo = document.getElementById(`${id}-btn-no`);
+
+      if (val === '有') {
+        btnYes.className = "px-3 py-1 text-xs rounded-md font-bold transition bg-emerald-600 text-white shadow-sm";
+        btnNo.className = "px-3 py-1 text-xs rounded-md font-bold transition text-gray-400";
+      } else {
+        btnYes.className = "px-3 py-1 text-xs rounded-md font-bold transition text-gray-400";
+        btnNo.className = "px-3 py-1 text-xs rounded-md font-bold transition bg-gray-500 text-white shadow-sm";
+      }
+    }
+
+    // 儲存設備
     async function submitEquipment() {
-      const inputs = document.querySelectorAll('.equip-input');
+      const btn = document.getElementById('btn-save-equip');
+      const schema = equipSchemas[currentEquipCat] || [];
+
       let fields = {};
-      inputs.forEach(input => {
-        fields[input.dataset.field] = input.value;
+      schema.forEach(field => {
+        const elem = document.getElementById(`field-${field.name}`);
+        if (elem) fields[field.name] = elem.value;
       });
 
-      // 轉換標籤名稱為對應工作表名稱
+      if (!fields["名稱"]) {
+        alert("請輸入名稱！");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i>儲存中...';
+
       const sheetMap = { "机器": "機器", "磨豆机": "磨豆機", "粉碗": "粉碗", "豆子": "豆子" };
 
       try {
@@ -479,11 +697,15 @@
             fields: fields
           })
         });
-        alert('新增成功！');
-        inputs.forEach(i => i.value = '');
+
+        alert('新增設備成功！');
+        toggleEquipForm(false);
         fetchData();
       } catch (err) {
         alert('新增失敗：' + err);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '儲存新增';
       }
     }
   </script>
