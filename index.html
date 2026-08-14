@@ -255,7 +255,7 @@
     let timer = { interval: null, startTime: 0, elapsedTime: 0 };
     let currentEquipCat = '机器';
 
-    // 設備表單欄位定義結構
+    // 設備表單欄位定義結構（依需求更動：機器改為總共使用杯數，豆子新增重量欄位）
     const equipSchemas = {
       "机器": [
         { name: "名稱", type: "text", required: true, placeholder: "例如：DeLonghi EC685" },
@@ -265,7 +265,7 @@
         { name: "品牌", type: "text", placeholder: "可空白" },
         { name: "購買路徑", type: "text", placeholder: "例如：PChome" },
         { name: "購買日", type: "date" },
-        { name: "重量(g)", type: "number", placeholder: "可空白" }
+        { name: "總共使用杯數", type: "readonly" }
       ],
       "磨豆机": [
         { name: "名稱", type: "text", required: true, placeholder: "例如：DF64 Gen2" },
@@ -291,7 +291,8 @@
         { name: "產地", type: "text", placeholder: "例如：衣索比亞" },
         { name: "品牌", type: "text", placeholder: "可空白" },
         { name: "購買路徑", type: "text", placeholder: "可空白" },
-        { name: "烘焙日", type: "date" }
+        { name: "烘焙日", type: "date" },
+        { name: "重量(g)", type: "number", placeholder: "可空白（例如：225）" }
       ]
     };
 
@@ -551,9 +552,10 @@
       container.innerHTML = items.map(item => {
         const name = item["名稱"] || item["name"] || "未命名";
         
-        // 從歷史參數中動態計算使用杯數
+        // 從歷史參數中動態計算使用杯數 (機器/磨豆機/粉碗)
         let cupCount = 0;
-        if (cat === "磨豆机") cupCount = (appData.history || []).filter(h => h["磨豆機"] === name).length;
+        if (cat === "机器") cupCount = (appData.history || []).filter(h => h["機器"] === name).length;
+        else if (cat === "磨豆机") cupCount = (appData.history || []).filter(h => h["磨豆機"] === name).length;
         else if (cat === "粉碗") cupCount = (appData.history || []).filter(h => h["粉碗"] === name).length;
 
         return `
@@ -565,7 +567,7 @@
             <div class="grid grid-cols-2 gap-x-2 gap-y-1 text-xs text-gray-500 pt-1">
               ${cat === '机器' ? `
                 <div><span class="text-gray-400">秤/溫度計：</span>${item["有秤"] === "有" ? "秤✓" : "無秤"} / ${item["有溫度計"] === "有" ? "溫✓" : "無溫"}</div>
-                <div><span class="text-gray-400">尺寸：</span>${item["可用粉碗尺寸"] || "-"}</div>
+                <div><span class="text-gray-400">總使用：</span><b class="text-amber-800">${cupCount}</b> 杯</div>
               ` : ''}
               ${cat === '磨豆机' ? `
                 <div><span class="text-gray-400">使用日：</span>${item["使用日"] || "-"}</div>
@@ -577,7 +579,7 @@
               ` : ''}
               ${cat === '豆子' ? `
                 <div><span class="text-gray-400">種類/烘焙：</span>${item["種類"] || "-"} (${item["烘焙程度"] || "-"})</div>
-                <div><span class="text-gray-400">烘焙日：</span>${item["烘焙日"] || "-"}</div>
+                <div><span class="text-gray-400">烘焙日/重量：</span>${item["烘焙日"] || "-"} (${item["重量(g)"] ? item["重量(g)"]+'g' : '-'})</div>
               ` : ''}
             </div>
           </div>
